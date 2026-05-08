@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Queen</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Playfair+Display:ital,wght@0,400;1,700&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0; padding: 0;
+            width: 100%; height: 100%;
+            background-color: #e3f2fd; /* Dreamy Light Blue */
+            color: #333;
+            font-family: 'Playfair Display', serif;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .stage {
+            display: none;
+            position: absolute;
+            text-align: center;
+            width: 85%;
+            max-width: 600px;
+            animation: fadeIn 2s ease-in-out forwards;
+            z-index: 10;
+        }
+
+        .active { display: block; }
+
+        h1 { font-family: 'Dancing Script', cursive; font-size: 3.5rem; color: #1e88e5; }
+        p { font-size: 1.4rem; line-height: 1.6; color: #444; }
+
+        .btn {
+            margin-top: 30px;
+            background: white;
+            border: 2px solid #1e88e5;
+            color: #1e88e5;
+            padding: 12px 35px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            border-radius: 50px;
+            transition: 0.4s;
+            font-weight: bold;
+        }
+
+        .btn:hover { background: #1e88e5; color: white; }
+
+        #final-letter-box {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 40px 30px;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            backdrop-filter: blur(5px);
+            text-align: left;
+        }
+
+        .floating-emoji {
+            position: fixed;
+            bottom: -50px;
+            font-size: 24px;
+            z-index: 1;
+            user-select: none;
+            pointer-events: none;
+            animation: floatUp linear forwards;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+        }
+
+        @keyframes fadeIn { 
+            from { opacity: 0; transform: translateY(20px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+
+        #video-container { pointer-events: none; opacity: 0; position: absolute; }
+    </style>
+</head>
+<body>
+
+<!-- ✅ ADDED MUSIC (ONLY ADDITION) -->
+<audio id="bg-music" loop>
+    <source src="song.mp3" type="audio/mpeg">
+</audio>
+
+<div id="video-container">
+    <iframe id="player" width="0" height="0" src="https://www.youtube.com/embed/S_8U7AatXm8?enablejsapi=1" frameborder="0"></iframe>
+</div>
+
+<div id="stage1" class="stage active">
+    <h1>Hi, My Queen...</h1>
+    <p>I wanted to show you something. Are you ready?</p>
+    <button class="btn" onclick="nextStage(1)">Yes, I am ❤️</button>
+</div>
+
+<div id="stage2" class="stage">
+    <p>It’s been exactly <span style="color: #1e88e5; font-weight: bold;">3 months</span> since we officially became us.</p>
+    <p>90 days of smiles, late nights, and falling for you more and more.</p>
+    <button class="btn" onclick="nextStage(2)">Keep going...</button>
+</div>
+
+<div id="stage3" class="stage">
+    <p>I know I haven’t always been perfect...</p>
+    <p>I’ve done things I shouldn't have, and I deeply apologize for that.</p>
+    <p>But my love for you has never wavered. Not for a second.</p>
+    <button class="btn" onclick="nextStage(3)">See my promise</button>
+</div>
+
+<div id="stage4" class="stage">
+    <div id="final-letter-box">
+        <h2 style="font-family: 'Dancing Script', cursive; font-size: 2rem; color: #1e88e5; margin-top: 0;">
+            My bby, my sweetheart, my cutie pie, queen of my heart, princess of beauty, my forever, my darling, my wife...
+        </h2>
+
+        <div style="font-size: 1.1rem; line-height: 1.8;">
+            Its alr veen 3 months since we officially became couples n yet it feels like it was yesterday...
+            <br><br>
+            I have done some things I shouldn't have and I deeply apologise for that...
+            <br><br>
+            There r gonna be some difficulties n obstacles that we have to face...
+            <br><br>
+            I love you so muchhhhhhhh 💝❤️‍🔥💗💖💌💞💓💕❤️❤️🫶🫶😋😘🤤💋💋💋
+        </div>
+
+        <p style="font-family: 'Dancing Script', cursive; font-size: 2.2rem; color: #1e88e5; text-align: center;">
+            Forever yours.
+        </p>
+    </div>
+</div>
+
+<script>
+    function nextStage(current) {
+        document.getElementById('stage' + current).classList.remove('active');
+        const next = current + 1;
+        document.getElementById('stage' + next).classList.add('active');
+
+        if (next === 2) {
+
+            // ✅ ONLY ADDED LINE (music starts here)
+            document.getElementById("bg-music").play().catch(()=>{});
+
+            setInterval(createEmoji, 600);
+        }
+
+        if (next === 4) {
+            setInterval(createEmoji, 300);
+            document.body.style.overflowY = "auto";
+            document.body.style.display = "block";
+            const activeStage = document.querySelector('.stage.active');
+            activeStage.style.position = "relative";
+            activeStage.style.margin = "50px auto";
+        }
+    }
+
+    function createEmoji() {
+        const emoji = document.createElement('div');
+        emoji.classList.add('floating-emoji');
+
+        const collection = ['💝','❤️‍🔥','💗','💖','💌','💞','💓','💕','❤️','🫶','😋','😘','🤤','💋','✨','🌙'];
+
+        emoji.innerHTML = collection[Math.floor(Math.random() * collection.length)];
+        emoji.style.left = Math.random() * 100 + "vw";
+
+        const duration = Math.random() * 3 + 4;
+        emoji.style.animationDuration = duration + "s";
+
+        document.body.appendChild(emoji);
+
+        setTimeout(() => {
+            emoji.remove();
+        }, duration * 1000);
+    }
+</script>
+
+</body>
+</html>
